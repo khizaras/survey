@@ -1,5 +1,5 @@
 // Example test for Poll model
-const Poll = require("../models/Poll");
+const Poll = require("../Poll");
 describe("Poll Model", () => {
   it("should have CRUD methods", () => {
     expect(Poll).toHaveProperty("create");
