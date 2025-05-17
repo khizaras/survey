@@ -1,3 +1,9 @@
+// Mock authMiddleware to always set req.user
+jest.mock("../../middleware/authMiddleware", () => (req, res, next) => {
+  req.user = { id: 1, name: "Test User", email: "test@example.com" };
+  next();
+});
+
 // Example test for API endpoint
 const request = require("supertest");
 const app = require("../../src/server");

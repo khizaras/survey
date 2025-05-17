@@ -12,3 +12,4 @@ jspm_packages/
 .npm
 # Optional eslint cache
 .eslintcache
+coverage/

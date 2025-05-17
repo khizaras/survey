@@ -8,6 +8,9 @@ const pollController = {
     // Use mock user for now
     const userId = 1;
     const { questions, expires_at } = req.body;
+    if (!Array.isArray(questions) || questions.length === 0) {
+      return res.status(400).json({ error: "Missing questions" });
+    }
     try {
       // Use the first question's text and type as the poll's main question/type (for summary/listing)
       const pollQuestion = questions[0]?.question_text || "";

@@ -12,8 +12,6 @@ const options = {
   queueLimit: 0,
 };
 
-console.log("Connecting to MySQL database with options:", options);
-
 const db = mysql.createPool(options);
 // Always use the promise wrapper for async/await compatibility
 module.exports = db;
