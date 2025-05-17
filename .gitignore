@@ -2,6 +2,7 @@ node_modules/
 dist/
 .env
 .DS_Store
+conversation.md
 # Logs
 logs/
 npm-debug.log*

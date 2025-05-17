@@ -14,12 +14,12 @@ const Poll = {
           data.creator_id,
           data.question,
           data.image_url,
-          data.type,
+          data.type || "survey", // Default to 'survey' if not provided
           data.expires_at,
           "active",
         ]
       );
-      return result.insertId;
+      return { id: result.insertId, ...data, type: data.type || "survey" };
     } catch (error) {
       console.error(error);
       throw error;

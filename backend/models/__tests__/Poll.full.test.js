@@ -10,6 +10,7 @@ describe("Poll Model", () => {
       question: "Test poll?",
       image_url: null,
       expires_at: null,
+      type: "survey", // Add type
     });
     expect(poll).toHaveProperty("id");
   });
@@ -27,6 +28,7 @@ describe("Poll Model", () => {
       ],
       image_url: null,
       expires_at: null,
+      type: "survey", // Add type
     });
     expect(poll).toHaveProperty("id");
   });
@@ -37,6 +39,7 @@ describe("Poll Model", () => {
       question: "Find me?",
       image_url: null,
       expires_at: null,
+      type: "survey", // Add type
     });
     const found = await Poll.findById(poll.id);
     expect(found).toBeTruthy();
@@ -49,6 +52,7 @@ describe("Poll Model", () => {
       question: "Update me?",
       image_url: null,
       expires_at: null,
+      type: "survey", // Add type
     });
     await Poll.update(poll.id, { question: "Updated!" });
     const updated = await Poll.findById(poll.id);
@@ -61,6 +65,7 @@ describe("Poll Model", () => {
       question: "Delete me?",
       image_url: null,
       expires_at: null,
+      type: "survey", // Add type
     });
     await Poll.delete(poll.id);
     const found = await Poll.findById(poll.id);
