@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { Layout, ConfigProvider } from "antd";
-import { Provider, useSelector } from "react-redux";
+import { Provider, useSelector, useDispatch } from "react-redux";
 import "./styles/main.less";
 import PollListPage from "./pages/PollListPage";
 import PollDetailPage from "./pages/PollDetailPage";
@@ -15,11 +15,17 @@ import AdminDashboardPage from "./pages/AdminDashboardPage";
 import LoginPage from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
 import store from "./store";
+import { fetchUser } from "./slices/userSlice";
+import axios from "axios";
 
 const { Content } = Layout;
 
 const AppContent = () => {
   const themeColor = useSelector((state) => state.theme.color);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
   return (
     <ConfigProvider
       theme={{
@@ -33,7 +39,7 @@ const AppContent = () => {
       <Router>
         <Layout style={{ minHeight: "100vh" }}>
           <Navbar />
-          <Content style={{ padding: "24px" }}>
+          <Content style={{ padding: 0, background: "none" }}>
             <Switch>
               <Route path="/login" component={LoginPage} />
               <Route path="/polls/create" component={PollCreatePage} />

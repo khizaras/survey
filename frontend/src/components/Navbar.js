@@ -1,17 +1,8 @@
 import React from "react";
-import { Menu, Layout, Dropdown, Button, Tooltip } from "antd";
+import { Menu, Layout } from "antd";
 import { Link, useLocation } from "react-router-dom";
-import {
-  RocketOutlined,
-  PlusCircleOutlined,
-  UserOutlined,
-  BarChartOutlined,
-  LoginOutlined,
-  BgColorsOutlined,
-} from "@ant-design/icons";
-import { SketchPicker } from "react-color";
-import { useDispatch, useSelector } from "react-redux";
-import { setThemeColor } from "../slices/themeSlice";
+import { RocketOutlined, UserOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 const { Header } = Layout;
 
@@ -37,93 +28,59 @@ const menuItems = [
 
 const Navbar = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
-  const themeColor = useSelector((state) => state.theme.color);
-  const [colorPickerVisible, setColorPickerVisible] = React.useState(false);
-
-  const handleThemeChange = (c) => {
-    dispatch(setThemeColor(c.hex));
-  };
-
-  const colorPicker = (
-    <div
-      style={{
-        padding: 12,
-        background: "#fff",
-        borderRadius: 8,
-        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-      }}
-    >
-      <SketchPicker
-        color={themeColor}
-        onChangeComplete={handleThemeChange}
-        presetColors={[
-          "#00eaff",
-          "#3a8dde",
-          "#ff4d4f",
-          "#52c41a",
-          "#faad14",
-          "#722ed1",
-          "#232526",
-          "#1890ff",
-        ]}
-        disableAlpha
-      />
-    </div>
-  );
-
+  const user = useSelector((state) => state.user.info);
+  // Filter out Login if user is logged in
+  const filteredMenuItems = user
+    ? menuItems.filter((item) => item.key !== "/login")
+    : menuItems;
   return (
     <Header
       style={{
-        background: "rgba(30, 41, 59, 0.85)",
-        padding: 0,
+        background: "#fff",
+        padding: "0 36px",
         display: "flex",
         alignItems: "center",
-        height: 72,
+        height: 80,
+        boxShadow: "0 2px 8px 0 rgba(0,0,0,0.04)",
+        borderBottom: "1.5px solid #e5e7eb",
       }}
     >
       <div
         style={{
-          color: "#00eaff",
-          fontWeight: 700,
-          fontSize: 28,
+          color: "#111",
+          fontWeight: 800,
+          fontSize: 32,
           letterSpacing: 2,
-          marginRight: 32,
+          marginRight: 48,
           display: "flex",
           alignItems: "center",
         }}
       >
-        <RocketOutlined style={{ fontSize: 32, marginRight: 10 }} />
+        <RocketOutlined style={{ fontSize: 38, marginRight: 14 }} />
         PollX
       </div>
       <Menu
         mode="horizontal"
         selectedKeys={[location.pathname]}
-        items={menuItems}
-        style={{ flex: 1, background: "transparent", borderBottom: "none" }}
+        items={filteredMenuItems}
+        style={{
+          flex: 1,
+          background: "transparent",
+          borderBottom: "none",
+          fontSize: 20,
+          fontWeight: 600,
+        }}
       />
-      <Tooltip title="Change Theme Color">
-        <Dropdown
-          menu={{ items: [{ key: "color", label: colorPicker }] }}
-          trigger={["click"]}
-          open={colorPickerVisible}
-          onOpenChange={setColorPickerVisible}
-        >
-          <Button
-            shape="circle"
-            icon={
-              <BgColorsOutlined style={{ color: themeColor, fontSize: 22 }} />
-            }
-            style={{
-              marginRight: 24,
-              marginLeft: 8,
-              border: "none",
-              background: "transparent",
-              boxShadow: "none",
-            }}
-          />
-        </Dropdown>
-      </Tooltip>
+      {user && (
+        <div style={{ display: "flex", alignItems: "center", marginLeft: 24 }}>
+          <div className="avatar" style={{ marginRight: 10 }}>
+            {user.name?.[0] || <UserOutlined />}
+          </div>
+          <span style={{ fontWeight: 600, color: "#222", fontSize: 17 }}>
+            {user.name}
+          </span>
+        </div>
+      )}
     </Header>
   );
 };

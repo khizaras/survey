@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
-import { Card, Button, List, Tag, Row, Col, Tooltip, Spin } from "antd";
+import { Card, Button, Tag, Row, Col, Tooltip, Spin } from "antd";
 import { Link } from "react-router-dom";
 import {
   ThunderboltOutlined,
   EyeOutlined,
-  CheckCircleOutlined,
+  UserOutlined,
+  TrophyOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPolls } from "../slices/pollsSlice";
+
+const leaderboardData = [
+  { name: "Alice", score: 12 },
+  { name: "Bob", score: 9 },
+  { name: "Carol", score: 7 },
+];
 
 const PollListPage = () => {
   const dispatch = useDispatch();
@@ -18,18 +25,31 @@ const PollListPage = () => {
   }, [dispatch]);
 
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-      <h1
-        style={{
-          color: "#00eaff",
-          fontWeight: 700,
-          fontSize: 36,
-          marginBottom: 32,
-          letterSpacing: 1,
-        }}
-      >
-        Active Polls
-      </h1>
+    <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+      <div className="app-hero">
+        <div>
+          <div className="app-hero-title">Internal Polling Dashboard</div>
+          <div className="app-hero-desc">
+            Participate in company polls, view results, and see who’s leading
+            the pack!
+          </div>
+        </div>
+        <div className="leaderboard">
+          <div className="leaderboard-title">
+            <TrophyOutlined style={{ color: "#faad14", marginRight: 8 }} />
+            Leaderboard
+          </div>
+          {leaderboardData.map((user, idx) => (
+            <div className="leaderboard-item" key={user.name}>
+              <div className="leaderboard-avatar">
+                <UserOutlined />
+              </div>
+              <span style={{ fontWeight: 600 }}>{user.name}</span>
+              <span className="leaderboard-score">{user.score} pts</span>
+            </div>
+          ))}
+        </div>
+      </div>
       <Row gutter={[32, 32]}>
         {loading ? (
           <Col span={24} style={{ textAlign: "center" }}>
@@ -39,13 +59,17 @@ const PollListPage = () => {
           <Col span={24} style={{ textAlign: "center", color: "red" }}>
             Failed to load polls: {error}
           </Col>
+        ) : polls.length === 0 ? (
+          <Col span={24} style={{ textAlign: "center", color: "#888" }}>
+            No polls available.
+          </Col>
         ) : (
           polls.map((poll) => (
-            <Col xs={24} sm={12} md={8} key={poll.id}>
+            <Col xs={24} sm={12} md={8} lg={6} key={poll.id}>
               <Card
                 className="poll-card"
                 hoverable
-                style={{ minHeight: 220, border: "none", marginBottom: 0 }}
+                style={{ minHeight: 220, border: "none" }}
                 title={
                   <span style={{ fontWeight: 600, fontSize: 20 }}>
                     {poll.question}
@@ -54,7 +78,7 @@ const PollListPage = () => {
                 extra={
                   <Tooltip title="View Poll">
                     <Link to={`/polls/${poll.id}`}>
-                      <EyeOutlined style={{ fontSize: 22, color: "#00eaff" }} />
+                      <EyeOutlined style={{ fontSize: 22, color: "#19d3ff" }} />
                     </Link>
                   </Tooltip>
                 }
@@ -63,16 +87,11 @@ const PollListPage = () => {
                     <Tooltip title="Vote">
                       <Link to={`/polls/${poll.id}`}>
                         <ThunderboltOutlined
-                          style={{ color: "#00eaff", fontSize: 20 }}
+                          style={{ color: "#19d3ff", fontSize: 20 }}
                         />{" "}
                         Vote
                       </Link>
                     </Tooltip>
-                  ),
-                  poll.status === "completed" && (
-                    <CheckCircleOutlined
-                      style={{ color: "#52c41a", fontSize: 20 }}
-                    />
                   ),
                 ]}
               >
@@ -101,7 +120,7 @@ const PollListPage = () => {
                     }}
                   />
                 )}
-                <div style={{ color: "#b2eaff", fontSize: 14, marginTop: 8 }}>
+                <div style={{ color: "#888", fontSize: 14, marginTop: 8 }}>
                   Created: {poll.created_at}
                 </div>
               </Card>

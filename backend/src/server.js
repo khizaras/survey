@@ -7,6 +7,7 @@ const path = require("path");
 const app = express();
 const pollRoutes = require(path.join(__dirname, "../routes/pollRoutes"));
 const adminRoutes = require(path.join(__dirname, "../routes/adminRoutes"));
+const userRoutes = require(path.join(__dirname, "../routes/userRoutes"));
 const authMiddleware = require(path.join(
   __dirname,
   "../middleware/authMiddleware"
@@ -24,11 +25,14 @@ app.use(authMiddleware);
 // API routes
 app.use("/api/polls", pollRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/user", userRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: "Internal Server Error" });
+  res
+    .status(500)
+    .json({ error: "Internal Server Error", details: err.message });
 });
 
 if (require.main === module) {
