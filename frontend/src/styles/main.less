@@ -1,0 +1,87 @@
+// Futuristic glassmorphism background
+@import "~antd/dist/antd.less";
+
+// Ant Design theme overrides (customize here)
+@primary-color: #00eaff;
+@border-radius-base: 16px;
+@font-size-base: 16px;
+@layout-header-background: rgba(30, 41, 59, 0.85);
+@layout-body-background: transparent;
+
+// Glassy card style
+.ant-card {
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f3f6fa;
+}
+
+// Navbar
+.ant-layout-header {
+  background: rgba(30, 41, 59, 0.85) !important;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 10;
+}
+
+// Menu
+.ant-menu {
+  background: transparent !important;
+  color: #f3f6fa !important;
+  font-weight: 500;
+  font-size: 18px;
+}
+.ant-menu-item-selected {
+  background: linear-gradient(90deg, #00eaff 0%, #3a8dde 100%) !important;
+  color: #232526 !important;
+  border-radius: 12px !important;
+}
+.ant-menu-item a {
+  color: inherit !important;
+}
+
+// Buttons
+.ant-btn-primary {
+  background: linear-gradient(90deg, #00eaff 0%, #3a8dde 100%) !important;
+  border: none;
+  color: #232526 !important;
+  font-weight: 600;
+  box-shadow: 0 2px 8px 0 rgba(0, 234, 255, 0.15);
+}
+.ant-btn {
+  border-radius: 12px !important;
+}
+
+// Poll cards
+.poll-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+// Disable hover, focus, and active effects for .no-hover-card class
+.no-hover-card,
+.no-hover-card:hover,
+.no-hover-card:focus,
+.no-hover-card:active {
+  box-shadow: 0 2px 12px #00eaff11 !important;
+  border-color: #f0f0f0 !important;
+  background: #f9f9f9 !important;
+  transition: none !important;
+  cursor: default !important;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .ant-layout {
+    padding: 0 !important;
+  }
+  .ant-card {
+    margin: 0 !important;
+    border-radius: 12px !important;
+  }
+  .ant-menu {
+    font-size: 16px;
+  }
+}
